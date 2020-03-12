@@ -1,0 +1,16 @@
+#docker run -d --name gitlab-runner --restart always \
+#  -v /var/run/docker.sock:/var/run/docker.sock \
+#  -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+#  gitlab/gitlab-runner:latest
+# https://docs.gitlab.com/runner/configuration/autoscale.html
+version: '3.3'
+
+services:
+    runner:
+        image: pollenm/docker_worker_phoenix_linux
+        #image: gitlab/gitlab-runner
+        #restart: unless-stopped
+        container_name: docker_worker_phoenix_linux
+        volumes:
+            - ./var/run/docker.sock:/var/run/docker.sock
+            #- ./etc/gitlab-runner/config:/etc/gitlab-runner 

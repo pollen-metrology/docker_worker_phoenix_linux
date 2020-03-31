@@ -84,7 +84,7 @@ echo "Register runner..."
 
 gitlab-runner register \
   --non-interactive \
-  --executor "docker" \
+  --executor "shell" \
   --docker-image alpine:latest \
   --url "https://gitlab.com/" \
   --registration-token "nYAsaK9DqxZevC5Sn5Qn" \

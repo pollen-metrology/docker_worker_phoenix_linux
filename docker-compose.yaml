@@ -1,3 +1,4 @@
+# docker-compose down && docker container prune && docker-compose up -d && docker logs docker_worker_phoenix_linux
 #docker run -d --name gitlab-runner --restart always \
 #  -v /var/run/docker.sock:/var/run/docker.sock \
 #  -v /srv/gitlab-runner/config:/etc/gitlab-runner \
@@ -11,6 +12,6 @@ services:
         #image: gitlab/gitlab-runner
         #restart: unless-stopped
         container_name: docker_worker_phoenix_linux
-        volumes:
-            - ./var/run/docker.sock:/var/run/docker.sock
+#        volumes:
+#            - ./var/run/docker.sock:/var/run/docker.sock
             #- ./etc/gitlab-runner/config:/etc/gitlab-runner 

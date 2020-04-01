@@ -108,8 +108,26 @@ RUN /opt/vcpkg/vcpkg install --triplet ${PHOENIX_TARGET_TRIPLET} --clean-after-b
          boost-stacktrace boost-iostreams boost-core boost-math boost-random boost-format boost-crc \
          opencv3[core,contrib,tiff,png,jpeg] vxl eigen3 gtest
 #----------------------------------------------------------------------------------------------------------------------#
+
+#----------------------------------------------------------------------------------------------------------------------#
+
+FROM phoenix_development_environment_0320 AS pyphoenix_development_environment_0320
+
+ENV PYTHON_PHOENIX_TARGET_TRIPLET=x64-linux
+
+RUN apt-get update &&\
+    apt-get upgrade --assume-yes &&\
+    apt-get install --assume-yes python3 python3-pip python3-dev &&\
+    python3 -m pip install --quiet --upgrade --no-cache-dir pip &&\
+    rm --force --recursive /var/lib/apt/lists/*
+
+# Do nothing - already installed
+#RUN /opt/vcpkg/vcpkg install --triplet ${PYTHON_PHOENIX_TARGET_TRIPLET} --clean-after-build \
+#        opencv3[core,contrib,tiff,png,jpeg]
+#----------------------------------------------------------------------------------------------------------------------#
+
 # GITLAB RUNNER"
-FROM phoenix_development_environment_0320 AS gitlab-runner_development_environment_0320
+FROM pyphoenix_development_environment_0320 AS gitlab-runner_development_environment_0320
 
 RUN apt-get update &&\
     apt-get install gitlab-runner -y

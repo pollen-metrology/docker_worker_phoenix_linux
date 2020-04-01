@@ -92,10 +92,24 @@ RUN apt-get update &&\
     rm --force --recursive /var/lib/apt/lists/* /tmp/cmake /tmp/lcov /tmp/powershell.tar.gz
 
 #----------------------------------------------------------------------------------------------------------------------#
+FROM pollen_cxx_development_environment_0320 AS phoenix_development_environment_0320
 
+ENV PHOENIX_TARGET_TRIPLET=x64-linux
+
+ARG VCPKG_COMMIT=411b4cc
+
+RUN git clone --quiet --recurse-submodules --branch master https://github.com/Microsoft/vcpkg.git /opt/vcpkg &&\
+    cd /opt/vcpkg && git checkout --quiet ${VCPKG_COMMIT} &&\
+    /opt/vcpkg/bootstrap-vcpkg.sh -disableMetrics -useSystemBinaries
+
+ENV PATH="/opt/vcpkg/vcpkg:${PATH}"
+
+RUN /opt/vcpkg/vcpkg install --triplet ${PHOENIX_TARGET_TRIPLET} --clean-after-build \
+         boost-stacktrace boost-iostreams boost-core boost-math boost-random boost-format boost-crc \
+         opencv3[core,contrib,tiff,png,jpeg] vxl eigen3 gtest
 #----------------------------------------------------------------------------------------------------------------------#
 # GITLAB RUNNER"
-FROM pollen_cxx_development_environment_0320 AS gitlab-runner_development_environment_0320
+FROM phoenix_development_environment_0320 AS gitlab-runner_development_environment_0320
 
 RUN apt-get update &&\
     apt-get install gitlab-runner -y

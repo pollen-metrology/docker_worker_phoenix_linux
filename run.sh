@@ -1,105 +1,51 @@
 #!/bin/bash
 
-#set -m
+term_handler() {
+      echo "Unregister Runner..."
+      gitlab-runner unregister --all-runners
+    }
 
- #git config user.name "$GIT_USER_NAME"
- #git config user.email "$GIT_USER_EMAIL"
+start() {
+  echo "Register runner..."
 
-#tail -f /dev/null
+  gitlab-runner register \
+    --non-interactive \
+    --executor "shell" \
+    --docker-image alpine:latest \
+    --url "https://gitlab.com/" \
+    --registration-token "nYAsaK9DqxZevC5Sn5Qn" \
+    --description "Kubernetes-Runner" \
+    --tag-list "phoenix,pyphoenix,phoenix-linux,pyphoenix-linux" \
+    --cache-type "s3" \
+    --cache-cache-shared=true \
+    --cache-s3-server-address "cache.pollen-metrology.com" \
+    --cache-s3-access-key "minioadmin" \
+    --cache-s3-secret-key "minioadmin" \
+    --cache-s3-bucket-name "runner" \
+    --run-untagged="true" \
+    --locked="false" &&
 
- #exec "$@"
+  echo "Run the runner... "  
 
-#registration_token=pCapPtgyG2vyoW1Xwbh7
+  gitlab-runner run &
 
-echo "Register runner..."
-
-#gitlab-runner register \
-#    --non-interactive \
-#    --registration-token ${registration_token} \
-#    --locked=false \
-#    --description runner-phoenix-linux \
-#    --url https://gitlab.com/ \
-#    --executor docker \
-#    --docker-image docker:stable &&
-
-#    --docker-volumes "/var/run/docker.sock:/var/run/docker.sock" \
-#    #--docker-network-mode gitlab-network 
-#    --access-level="not_protected" \
-#    --tag-list kubernetes,test
-#    >> /var/log/console.log 2>&1
-
-#docker run --rm -v /srv/gitlab-runner/config:/etc/gitlab-runner 
-
-#gitlab-runner register \
-#  --non-interactive \
-#  --executor "docker" \
-#  --docker-image docker:latest \
-#  --url "https://gitlab.com/" \
-#  --registration-token ${registration_token} \
-#  --description "docker-runner" \
-#  --tag-list "docker,aws" \
-#  --run-untagged="true" \
-#  --locked="false" &&
-#  #--access-level ="not_protected"
+# Keep Alive
+  while true
+    do
+      tail -f /dev/null & wait ${!}
+    done
+  
+  }
 
 
-#################
-#gitlab-runner verify --delete
-#
-#gitlab-runner register \
-#  --non-interactive \
-#  --registration-token pCapPtgyG2vyoW1Xwbh7 \
-#  --locked=false \
-#  --description runner-phoenix-linux \
-#  --url https://gitlab.com/ \
-#  --executor shell \
-#  --tag-list phoenix &&
-####################
+trap 'kill ${!}; term_handler' SIGTERM
 
-#gitlab-runner start &&
-
-
-
-#gitlab-runner verify
-
-#if [ $? -gt 0 ]; then
-#  echo "===> ERROR: Registration failed !"
-#  #exit 1
-#  else
-#  echo "===> Register OK"
-#fi    
-
-#gitlab-runner verify
-
-
-#gitlab-runner register --non-interactive \
-#      --url "https://gitlab.com/" \
-#      --executor kubernetes \
-#      --config "/etc/gitlab-runner/config.toml" \
-#      --registration-token nYAsaK9DqxZevC5Sn5Qn \
-#      --locked=false \
-#      --description "Kubernetes-Runner" \
-#      --tag-list phoenix \
-#      --kubernetes-privileged
-
-gitlab-runner register \
-  --non-interactive \
-  --executor "shell" \
-  --docker-image alpine:latest \
-  --url "https://gitlab.com/" \
-  --registration-token "nYAsaK9DqxZevC5Sn5Qn" \
-  --description "Kubernetes-Runner" \
-  --tag-list "phoenix,pyphoenix" \
-  --run-untagged="true" \
-  --locked="false" \
-  &&
-  #--access-level="not_protected"
-
-
-
-gitlab-runner run &&
+start ${!}
 #tail -f /dev/null
 
 #Extra line added in the script to run all command line arguments
-exec "$@";
-#exec "tail -f /dev/null" &
+#exec "$@";
+#while true
+#    do
+#      tail -f /dev/null & wait ${!}
+#    done

@@ -1,4 +1,7 @@
-# docker build -t pollenm/docker_worker_phoenix_linux .
+# docker build -t pollenm/docker_worker_phoenix_linux_test .
+# docker run -it pollenm/docker_worker_phoenix_linux_test
+# push to docker-hub : docker push pollenm/docker_worker_phoenix_linux_test
+# push to github : git add Dockerfile && git commit -m "update" && git push
 ##FROM ubuntu:19.10
 ##LABEL MAINTENER Pollen Metrology <admin-team@pollen-metrology.com>
 
@@ -98,6 +101,7 @@ ENV PHOENIX_TARGET_TRIPLET=x64-linux
 
 ARG VCPKG_COMMIT=411b4cc
 
+# ERROR !!!
 RUN git clone --quiet --recurse-submodules --branch master https://github.com/Microsoft/vcpkg.git /opt/vcpkg &&\
     cd /opt/vcpkg && git checkout --quiet ${VCPKG_COMMIT} &&\
     /opt/vcpkg/bootstrap-vcpkg.sh -disableMetrics -useSystemBinaries
@@ -115,11 +119,44 @@ FROM phoenix_development_environment_0320 AS pyphoenix_development_environment_0
 
 ENV PYTHON_PHOENIX_TARGET_TRIPLET=x64-linux
 
+#RUN apt-get update &&\
+#    apt-get upgrade --assume-yes &&\
+#    apt-get install --assume-yes python3 python3-pip python3-dev &&\
+#    python3 -m pip install --quiet --upgrade --no-cache-dir pip &&\
+#    rm --force --recursive /var/lib/apt/lists/*
+
+# Install tools from Python install
 RUN apt-get update &&\
     apt-get upgrade --assume-yes &&\
-    apt-get install --assume-yes python3 python3-pip python3-dev &&\
-    python3 -m pip install --quiet --upgrade --no-cache-dir pip &&\
-    rm --force --recursive /var/lib/apt/lists/*
+    apt install wget zlib1g-dev -y
+
+
+# Install Python 3.6.10
+RUN cd /tmp &&\
+    wget https://www.python.org/ftp/python/3.6.10/Python-3.6.10.tar.xz &&\
+    tar xvf Python-3.6.10.tar.xz &&\
+    cd Python-3.6.10 &&\
+    ./configure --enable-shared  --prefix=/usr &&\
+    make install &&\
+    python3.6 --version
+
+# Install Python 3.7.7
+RUN cd /tmp &&\
+    wget https://www.python.org/ftp/python/3.7.7/Python-3.7.7.tar.xz &&\
+    tar xvf Python-3.7.7.tar.xz &&\
+    cd Python-3.7.7 &&\
+    ./configure --enable-shared  --prefix=/usr &&\
+    make install &&\
+    python3.7 --version
+
+# Install Python 3.8.2
+RUN cd /tmp &&\
+    wget https://www.python.org/ftp/python/3.8.2/Python-3.8.2.tar.xz &&\
+    tar xvf Python-3.8.2.tar.xz &&\
+    cd Python-3.8.2 &&\
+    ./configure --enable-shared  --prefix=/usr &&\
+    make install &&\
+    python3.8 --version
 
 # Do nothing - already installed
 #RUN /opt/vcpkg/vcpkg install --triplet ${PYTHON_PHOENIX_TARGET_TRIPLET} --clean-after-build \
@@ -136,4 +173,5 @@ COPY run.sh /
 RUN chmod 755 /run.sh
 
 ENTRYPOINT ["/./run.sh", "-D", "FOREGROUND"]
+#ENTRYPOINT ["tail", "-f", "/dev/null"]
 #----------------------------------------------------------------------------------------------------------------------#

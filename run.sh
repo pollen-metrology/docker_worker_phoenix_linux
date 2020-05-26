@@ -19,8 +19,8 @@ start() {
     --cache-type "s3" \
     --cache-cache-shared=true \
     --cache-s3-server-address "cache.pollen-metrology.com" \
-    --cache-s3-access-key "minioadmin" \
-    --cache-s3-secret-key "minioadmin" \
+    --cache-s3-access-key "administrateur" \
+    --cache-s3-secret-key "v7rB2i6t88h" \
     --cache-s3-bucket-name "runner" \
     --run-untagged="true" \
     --locked="false" &&

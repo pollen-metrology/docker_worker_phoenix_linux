@@ -158,6 +158,9 @@ RUN cd /tmp &&\
     make install &&\
     python3.8 --version
 
+# Install Conan
+RUN python3 -m pip install conan    
+
 # Do nothing - already installed
 #RUN /opt/vcpkg/vcpkg install --triplet ${PYTHON_PHOENIX_TARGET_TRIPLET} --clean-after-build \
 #        opencv3[core,contrib,tiff,png,jpeg]

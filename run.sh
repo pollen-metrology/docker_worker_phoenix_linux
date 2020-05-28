@@ -13,14 +13,14 @@ start() {
     --executor "shell" \
     --docker-image alpine:latest \
     --url "https://gitlab.com/" \
-    --registration-token "nYAsaK9DqxZevC5Sn5Qn" \
+    --registration-token $KUBERNETES_RUNNER_REGISTER_TOKEN \
     --description "Kubernetes-Runner" \
     --tag-list "phoenix,pyphoenix,phoenix-linux,pyphoenix-linux" \
     --cache-type "s3" \
     --cache-cache-shared=true \
-    --cache-s3-server-address "cache.pollen-metrology.com" \
-    --cache-s3-access-key "administrateur" \
-    --cache-s3-secret-key "v7rB2i6t88h" \
+    --cache-s3-server-address $KUBERNETES_RUNNER_CACHE_SERVER_ADDRESS \
+    --cache-s3-access-key $KUBERNETES_RUNNER_CACHE_ACCESS_KEY \
+    --cache-s3-secret-key $KUBERNETES_RUNNER_CACHE_SECRET_KEY \
     --cache-s3-bucket-name "runner" \
     --run-untagged="true" \
     --locked="false" &&

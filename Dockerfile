@@ -127,7 +127,7 @@ ENV PYTHON_PHOENIX_TARGET_TRIPLET=x64-linux
 # Install tools from Python install
 RUN apt-get update &&\
     apt-get upgrade --assume-yes &&\
-    apt install wget zlib1g-dev sqlite -y
+    apt install wget zlib1g-dev sqlite libsqlite3-dev -y
 
 
 # Install Python 3.6.10

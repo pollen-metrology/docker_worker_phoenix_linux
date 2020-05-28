@@ -101,7 +101,6 @@ ENV PHOENIX_TARGET_TRIPLET=x64-linux
 
 ARG VCPKG_COMMIT=411b4cc
 
-# ERROR !!!
 RUN git clone --quiet --recurse-submodules --branch master https://github.com/Microsoft/vcpkg.git /opt/vcpkg &&\
     cd /opt/vcpkg && git checkout --quiet ${VCPKG_COMMIT} &&\
     /opt/vcpkg/bootstrap-vcpkg.sh -disableMetrics -useSystemBinaries
@@ -128,7 +127,7 @@ ENV PYTHON_PHOENIX_TARGET_TRIPLET=x64-linux
 # Install tools from Python install
 RUN apt-get update &&\
     apt-get upgrade --assume-yes &&\
-    apt install wget zlib1g-dev -y
+    apt install wget zlib1g-dev sqlite -y
 
 
 # Install Python 3.6.10

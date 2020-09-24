@@ -107,9 +107,10 @@ RUN git clone --quiet --recurse-submodules --branch master https://github.com/Mi
 
 ENV PATH="/opt/vcpkg/vcpkg:${PATH}"
 
+RUN /opt/vcpkg/vcpkg update
 RUN /opt/vcpkg/vcpkg install --triplet ${PHOENIX_TARGET_TRIPLET} --clean-after-build \
          boost-stacktrace boost-iostreams boost-core boost-math boost-random boost-format boost-crc \
-         opencv3[core,contrib,tiff,png,jpeg] vxl eigen3 gtest
+         opencv3[core,contrib,tiff,png,jpeg] vxl eigen3 gtest boost-geometry
 #----------------------------------------------------------------------------------------------------------------------#
 
 #----------------------------------------------------------------------------------------------------------------------#
@@ -175,5 +176,5 @@ COPY run.sh /
 RUN chmod 755 /run.sh
 
 ENTRYPOINT ["/./run.sh", "-D", "FOREGROUND"]
-#ENTRYPOINT ["tail", "-f", "/dev/null"]
+###ENTRYPOINT ["tail", "-f", "/dev/null"]
 #----------------------------------------------------------------------------------------------------------------------#

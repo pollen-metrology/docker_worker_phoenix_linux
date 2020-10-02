@@ -17,7 +17,7 @@ start() {
     --description "Kubernetes-Runner" \
     --tag-list "phoenix,pyphoenix,phoenix-linux,pyphoenix-linux" \
     --cache-type "s3" \
-    --cache-cache-shared=true \
+    --cache-shared=true \
     --cache-s3-server-address $KUBERNETES_RUNNER_CACHE_SERVER_ADDRESS \
     --cache-s3-access-key $KUBERNETES_RUNNER_CACHE_ACCESS_KEY \
     --cache-s3-secret-key $KUBERNETES_RUNNER_CACHE_SECRET_KEY \

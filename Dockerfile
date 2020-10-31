@@ -110,7 +110,7 @@ ENV PATH="/opt/vcpkg/vcpkg:${PATH}"
 RUN /opt/vcpkg/vcpkg update
 RUN /opt/vcpkg/vcpkg install --triplet ${PHOENIX_TARGET_TRIPLET} --clean-after-build \
          boost-stacktrace boost-iostreams boost-core boost-math boost-random boost-format boost-crc \
-         opencv3[core,contrib,tiff,png,jpeg] vxl eigen3 gtest boost-geometry
+         opencv3[core,contrib,tiff,png,jpeg] vxl eigen3 gtest boost-geometry nlopt
 #----------------------------------------------------------------------------------------------------------------------#
 
 #----------------------------------------------------------------------------------------------------------------------#

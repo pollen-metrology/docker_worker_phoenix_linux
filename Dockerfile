@@ -1,6 +1,6 @@
-# docker build -t pollenm/docker_worker_phoenix_linux_test .
-# docker run -it pollenm/docker_worker_phoenix_linux_test
-# push to docker-hub : docker push pollenm/docker_worker_phoenix_linux_test
+# docker build -t pollenm/docker_worker_phoenix_linux .
+# docker run -it pollenm/docker_worker_phoenix_linux
+# push to docker-hub : docker push pollenm/docker_worker_phoenix_linux
 # push to github : git add Dockerfile && git commit -m "update" && git push
 ##FROM ubuntu:19.10
 ##LABEL MAINTENER Pollen Metrology <admin-team@pollen-metrology.com>

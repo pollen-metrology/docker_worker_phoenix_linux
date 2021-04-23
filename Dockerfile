@@ -80,6 +80,7 @@ ENV CXX=g++-9
 # -> curl unzip tar are required by VCPKG
 # -> nano, used as a tiny editor, is installed for convenience
 # -> powershell: common scripting for both Windows and Linux images
+
 RUN apt-get update &&\
     apt-get upgrade --assume-yes &&\
     apt-get install --assume-yes gcc-9-multilib g++-9-multilib libstdc++-9-dev libgl1-mesa-dev \
@@ -174,7 +175,7 @@ RUN python3 -m pip install conan
 
 # Install intel mkl (must have pip)
 RUN apt-get update
-RUN apt-get -y install python2 && cd /tmp && curl https://bootstrap.pypa.io/2.7/get-pip.py --output get-pip.py && python2 get-pip.py
+RUN apt-get -y install python2 && cd /tmp && curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py && python2 get-pip.py
 #RUN apt-get install -y python3-pip
 # mkl
 RUN pip install mkl_include==2021.1.1

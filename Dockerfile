@@ -69,7 +69,8 @@ LABEL maintainer="herve.ozdoba@pollen-metrology.com"
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Commit 411b4cc is the last working version for compiling VXL (then contributors brokes the port file)
-ARG CMAKE_VERSION=v3.16.4
+#ARG CMAKE_VERSION=v3.16.4
+ARG CMAKE_VERSION=v3.20.5
 
 ENV CC=gcc-9
 ENV CXX=g++-9
